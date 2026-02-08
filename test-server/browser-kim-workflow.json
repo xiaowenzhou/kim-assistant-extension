@@ -1,0 +1,62 @@
+{
+  "name": "Browser Plugin to Kim Session",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "browser-to-kim",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "webhookId": "browser-kim"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "fileName": "/root/.openclaw/agents/main/sessions/browser-{{ $json.conversationId || 'default' }}.jsonl",
+        "options": {}
+      },
+      "id": "write-session",
+      "name": "Write to Session",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "id": "kim-response",
+      "name": "Kim Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "method": "POST",
+      "url": "http://localhost:11434/api/response"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [{
+          "node": "Write to Session",
+          "type": "main",
+          "index": 0
+        }]
+      ]
+    },
+    "Write to Session": {
+      "main": [
+        [{
+          "node": "Kim Response",
+          "type": "main",
+          "index": 0
+        }]
+      ]
+    }
+  }
+}

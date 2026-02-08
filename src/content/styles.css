@@ -1,0 +1,57 @@
+/**
+ * Kim Assistant - Content Styles
+ */
+
+/* Smooth scrolling for messages */
+#kim-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+#kim-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#kim-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+/* Input focus states */
+#kim-input:focus {
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+#kim-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Quick button hover */
+.kim-quick-btn:hover {
+  background: rgba(99, 102, 241, 0.3) !important;
+  color: white !important;
+}
+
+/* Send button hover */
+#kim-send-btn:hover {
+  transform: scale(1.05);
+}
+
+/* User message */
+.kik-message.kim-user {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+}
+
+/* Bot message with code blocks */
+.kim-message pre {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.kim-message code {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', sans-serif;
+  font-size: 13px;
+}

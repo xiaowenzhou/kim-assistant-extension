@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kim Assistant - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 24px;
+      color: #fff;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subtitle {
+      color: #94a3b8;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card h2 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #e2e8f0;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+    button {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .toggle:last-child {
+      border-bottom: none;
+    }
+    .toggle-label {
+      font-size: 14px;
+    }
+    .toggle-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .toggle input {
+      width: 44px;
+      height: 24px;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+    }
+    .toggle input::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    .toggle input:checked {
+      background: #6366f1;
+    }
+    .toggle input:checked::before {
+      transform: translateX(20px);
+    }
+    .status {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+    .status.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+    .status.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+    .help {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: -8px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ Kim Assistant Settings</h1>
+    <p class="subtitle">Configure your AI companion</p>
+
+    <div class="card">
+      <h2>🔗 OpenClaw Connection</h2>
+      
+      <label>OpenClaw Gateway URL</label>
+      <input type="text" id="openclawUrl" placeholder="http://localhost:11434">
+      <p class="help">The URL where your OpenClaw gateway is running</p>
+
+      <label>API Path</label>
+      <input type="text" id="apiPath" placeholder="/api/message" value="/api/message">
+      <p class="help">The API endpoint for sending messages</p>
+
+      <label>🔐 API Key (Optional but Recommended)</label>
+      <input type="password" id="apiKey" placeholder="Enter your API key for secure mode">
+      <p class="help">Required for secure server mode. Leave empty for open mode.</p>
+
+      <button id="testBtn">Test Connection</button>
+      <div id="status" class="status"></div>
+    </div>
+
+    <div class="card">
+      <h2>⚡ Features</h2>
+      
+      <div class="toggle">
+        <div>
+          <div class="toggle-label">Auto-connect on page load</div>
+          <div class="toggle-desc">Show floating button automatically</div>
+        </div>
+        <input type="checkbox" id="autoConnect" checked>
+      </div>
+      
+      <div class="toggle">
+        <div>
+          <div class="toggle-label">Save chat history</div>
+          <div class="toggle-desc">Store conversations locally</div>
+        </div>
+        <input type="checkbox" id="saveHistory" checked>
+      </div>
+      
+      <div class="toggle">
+        <div>
+          <div class="toggle-label">Show quick actions</div>
+          <div class="toggle-desc">Display summarize/explain buttons</div>
+        </div>
+        <input type="checkbox" id="showQuickActions" checked>
+      </div>
+    </div>
+
+    <button id="saveBtn" style="width: 100%;">💾 Save Settings</button>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

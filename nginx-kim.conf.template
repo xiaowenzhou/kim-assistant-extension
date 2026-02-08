@@ -1,0 +1,24 @@
+# Nginx 配置模板
+# 复制为 nginx-kim.conf 并填入真实值
+
+server {
+    listen 443 ssl;
+    server_name your-domain.example.com;
+
+    # SSL 证书路径（脱敏示例）
+    ssl_certificate /path/to/ssl/certificate.crt;
+    ssl_certificate_key /path/to/ssl/private.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    location / {
+        proxy_pass http://localhost:11434;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        
+        # API Key 验证头部
+        proxy_set_header X-API-Key $http_x_api_key;
+    }
+}
